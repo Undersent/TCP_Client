@@ -3,5 +3,6 @@ project(TCP_Client)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES ConnectorToTCPServer.h ConnectorToTCPServer.cpp TCPStreamData.h TCPStreamData.cpp
+        Client.cpp)
 add_executable(TCP_Client ${SOURCE_FILES})
