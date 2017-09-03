@@ -1,10 +1,11 @@
 #include <iostream>
+#include <cstring>
 #include "TCPStreamData.h"
 
 #include "ConnectorToTCPServer.h"
 
 
-using namespace std;
+
 const int MAXSIZE = 256;
 int main(int argc, char** argv)
 {
@@ -13,33 +14,24 @@ int main(int argc, char** argv)
        return 0;
    }
 
-    int length;
+    ssize_t length;
     std::string message;
-    char input[MAXSIZE];
+    //char input[MAXSIZE];
+    std::string input;
     char line [MAXSIZE];
     auto* connector = new ConnectorToTCPServer();
     TCPStreamData* stream = connector -> makeConnection(argv[2], atoi(argv[1]));
-    if(stream) {
-        //message = "Is there life on Mars?";
-
-        cin.getline(input,sizeof(input));
-        stream -> send(input, MAXSIZE);
+    while(true) {
+        getline(std::cin, input);
+        if(input == ":!q") {break;}
+        stream -> send(input.c_str(), input.size());
         std::cout<< "sent - "<< input;
         length = stream -> receive(line, sizeof(line));
         line[length] = NULL;
         std::cout<< "\nreceived - "<< line << "\n";
-        delete stream;
-    }
 
-    stream = connector -> makeConnection(argv[2], atoi(argv[1]));
-    if(stream) {
-        message = "Why is there air?";
-        stream -> send(message.c_str(), message.size());
-        std::cout<< "sent - "<< message.c_str();
-        length = stream -> receive(line, sizeof(line));
-        line[length] = NULL;
-        std::cout<< "\nreceived - "<< line << "\n";
-        delete stream;
     }
+    delete stream;
     return 0;
 }
+
