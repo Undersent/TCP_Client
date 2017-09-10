@@ -9,7 +9,7 @@
 const int MAXSIZE = 256;
 TCPStreamData* stream;
 void establishRSA();
-
+RSA rsa;
 int main(int argc, char** argv)
 {
    if(argc != 3){
@@ -40,23 +40,17 @@ int main(int argc, char** argv)
 }
 
 void establishRSA() {
-    RSA rsa;//RSA rsa1(rsa.get_module(), rsa.get_publicKey());
     std::string rsaKey;
     std::string module{std::to_string(rsa.get_module())};
     std::string publicKey{std::to_string(rsa.get_publicKey())};
     rsaKey = "[" + module + " " + publicKey + "]";
-    std::cerr<<rsaKey;
     stream -> send(rsaKey.c_str(), rsaKey.size());
-    std::cout<< "trying to establish connection";
+    std::cout<< "Trying to establish connection with server\n";
     ssize_t length;
     std::string message;
     char line [MAXSIZE];
     length = stream -> receive(line, sizeof(line));
     line[length] = NULL;
-    std::cout<< "\nreceived - "<< line << "\n";
     rsa.set_converserPublicKey(atoi(line));
-    //length = stream -> receive(line, sizeof(line));
-    //line[length] = NULL;
-    //std::cout<< "\nreceived - "<< line << "\n";
 }
 
