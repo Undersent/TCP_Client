@@ -77,7 +77,6 @@ namespace RSA {
         pch = strtok(d," ");
         while (pch != NULL)
         {
-            printf ("%s\n",pch);
             uncodedMessage+=char(decrypt(atol(pch)));
             pch = strtok (NULL, " ");
         }

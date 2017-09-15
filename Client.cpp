@@ -7,7 +7,7 @@
 #include "RSA/RSA.h"
 
 
-const int MAXSIZE = 256;
+const int MAXSIZE = 1024;
 TCPStreamData* stream;
 void establishRSA();
 std::unique_ptr<RSA::RSA> rsa;
@@ -31,7 +31,6 @@ int main(int argc, char** argv)
         if(input == ":!q") {break;}
         input = rsa->encryptString(input);
         stream -> send(input.c_str(), input.size());
-        //std::cout<< "sent - "<< input<<"NULL\n";
         length = stream -> receive(line, sizeof(line));
         line[length] = NULL;
         std::string decodedText  = rsa->decryptString(line);
