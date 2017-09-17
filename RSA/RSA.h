@@ -4,43 +4,51 @@
 
 #ifndef PROJECT_RSA_H
 #define PROJECT_RSA_H
+
 #include <vector>
 
-namespace RSA {
+class RSA {
 
-    class RSA {
-
-    private:
-        long _ownPublicKey{};
-        long _converserPublicKey{};
-        long _privateKey{};
-        long _module{};
+private:
+    long _ownPublicKey{};
+    long _converserPublicKey{};
+    long _privateKey{};
+    long _module{};
 
 
-    public:
-        RSA();
-        RSA(long module, long converserPublicKey)
-                : _module(module), _converserPublicKey(converserPublicKey) {initializeKeys(true);}
+public:
+    RSA();
+
+    RSA(long module, long converserPublicKey)
+            : _module(module), _converserPublicKey(converserPublicKey) { initializeKeys(true); }
 
 
-        void initializeKeys(bool);
-        std::vector<long> decryptString(std::vector<long> text);
-        std::vector<long> encryptString(std::vector<long> text);
-        std::string encryptString(std::string text);
-        std::string decryptString(std::string String);
-        long get_publicKey() const;
-        long get_module() const;
-        void set_converserPublicKey(long key);
+    void initializeKeys(bool);
 
-    private:
-        long decrypt(long codeRSA);
-        long encrypt(long codeRSA);
-        long GCD(long a, long b);
-        long extendedEuclideanModulo(long a, long n);
+    std::vector<long> &decryptString(std::vector<long> &text) const;
 
-        friend class RSATest;
+    std::vector<long> &encryptString(std::vector<long> &text) const;
 
-    };
+    std::string encryptString(const std::string &text) const;
 
-}
+    std::string decryptString(const std::string &text) const;
+
+    const long get_publicKey() const;
+
+    const long get_module() const;
+
+    void set_converserPublicKey(const long &key);
+
+private:
+    long decrypt(long codeRSA) const;
+
+    long encrypt(long codeRSA) const;
+
+    long GCD(long a, long b);
+
+    long extendedEuclideanModulo(long a, long n);
+
+};
+
+
 #endif //PROJECT_RSA_H
